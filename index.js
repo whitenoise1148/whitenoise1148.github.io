@@ -28,34 +28,22 @@ const Document = function () {
     const distributeStones = (numStones, cupIndex) => {
         // Take the number of stones in the object numStones
         // cupIndex will be used to determine where to distribute said stones
-        // console.log(cupIndex);
-        // if (cupIndex === 11) {
-            //     cupIndex = -1;
-            // }
             
-            // console.log('cup ' + cupIndex);
-            // console.log('This cup has ' + numStones + ' stones');
             for (let i = cupIndex + 1; i < cupIndex + 1 + numStones; i++){
-                // console.log(i);
-                // console.log(cupArray[i].stoneCount);
                 if (i >= cupArray.length) {
-                    // console.log(i, cupArray.length, i % cupArray.length);
                     cupArray[i % cupArray.length].stoneCount = cupArray[i % cupArray.length].stoneCount + 1;
                 } else {
                     cupArray[i].stoneCount = cupArray[i].stoneCount + 1;
                 }
             };
             
-            // console.log(cupIndex);
             if (cupIndex === -1) {
                 cupArray[11].stoneCount = 0;
             } else {
                 cupArray[cupIndex].stoneCount = 0;
             }
-            // console.log(cupArray[cupIndex].stoneCount);
             
             let removeStones = cupArray[cupIndex].stoneCount;
-            // console.log(removeStones);
             // Remove div.stone's from the clicked object
             if (removeStones === 0) {
                 $(`.cup${cupIndex}`).empty();
@@ -80,13 +68,12 @@ const Document = function () {
                     cupArray[cupIndex].stoneCount = 0;
                     $(`.cup${x}`).empty();
                 }
-            }
-            
-            // Loop through cupArray using the Index from each iteration
-            // Find the cup that corresponds to the index
-            // Use the stoneCount from that current iterations stoneCount and put that number of divs in the cup
+            }    
         };
         
+        // Loop through cupArray using the Index from each iteration
+        // Find the cup that corresponds to the index
+        // Use the stoneCount from that current iterations stoneCount and put that number of divs in the cup
         const gameLogic = function(cup, cupIndex){
             // console.log(score);
             if (cup.stoneCount >= 1) {
@@ -118,7 +105,33 @@ const Document = function () {
                 gameLogic(cupArray[i], i);
             });
         });
+                
+        window.twttr = (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0],
+            t = window.twttr || {};
+            if (d.getElementById(id)) return t;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "https://platform.twitter.com/widgets.js";
+            fjs.parentNode.insertBefore(js, fjs);
+            
+            t._e = [];
+            t.ready = function (f) {
+                t._e.push(f);
+            };
+            
+            return t;
+            
+        }(document, "script", "twitter-wjs"));
         
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
 
         // The player chooses one of their cups(arrays 1-6 or 7-12), takes all of those stones and places 1 in each of the following cups until they run out
         // Create click event that checks how many stones are in the clicked cup
@@ -144,30 +157,3 @@ const Document = function () {
                 //         alert('playerOne Wins!!!');
                 //     }
                 // }
-
-
-window.twttr = (function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0],
-        t = window.twttr || {};
-    if (d.getElementById(id)) return t;
-    js = d.createElement(s);
-    js.id = id;
-    js.src = "https://platform.twitter.com/widgets.js";
-    fjs.parentNode.insertBefore(js, fjs);
-
-    t._e = [];
-    t.ready = function (f) {
-        t._e.push(f);
-    };
-
-    return t;
-
-}(document, "script", "twitter-wjs"));
-
-(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
