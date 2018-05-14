@@ -5,62 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="styles/styles.css">
-    <link rel="icon" href="http://example.com/favicon.png">
-    <link href="https://fonts.googleapis.com/css?family=Arimo:400,700|Monoton" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
-    <link rel="canonical" href="/web/tweet-button">
-    <title>Oware</title>
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:900i|Nunito+Sans" rel="stylesheet">
+    <title>Take Off</title>
 </head>
-
 <body>
-    <div id="fb-root"></div>
-    <!-- Start of Header -->
-    <header>
-        <!-- Beginning of the nav - logo left, nav <a> tags middle - social share icons right -->
-        <nav class="wrap">
-            <ul>
-                <li><a href="#" id="logo">Oware</a></li>
-                <li><a href="#" alt="Link to home">Home</a></li>
-                <li><a href="#" alt="Link to game rules">Rules</a></li>
-                <li><a href="#" alt="Link to history of Oware">History</a></li>
-                <li><div class=" facebook-button1 fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="small"
-                data-mobile-iframe="true">
-                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Share</a>
-                </div></li>
-                <li class="twitter-button1"><a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Give%20Oware%20A%20Try%20and%20get%20yourself%20a%20Chicken%20Dinner!?url=https%3A%2F%2Fjeffwhite.io%2F" data-size="small">Tweet</a></li>
-            </ul>
-        </nav>
-        <!-- End of nav -->
-    </header>
-    <!-- End of Header -->
-    <main class="wrap">
-        <div class="board">
-            <div class="bank player-one-bank">
-                <h2>Player One</h2>
+    <main>
+        <!-- City Choice -->
+        <section class="page page1">
+            <h1 id="title">Take Off</h1>
+            <div class="container">
+                <h2>Where will your adventure take you this time?</h2>
+                <div class="cityForm">
+                    <button id="wasaga">
+                        Wasaga Beach
+                    </button>
+                    <button id="sauble">
+                        Sauble Beach
+                    </button>
+                    <button id="tobermory">
+                        Tobermory
+                    </button>
+                </div>
             </div>
-            <div class="playerOne side side-container">
-                <div class="cup cup0"></div>
-                <div class="cup cup1"></div>
-                <div class="cup cup2"></div>
-                <div class="cup cup3"></div>
-                <div class="cup cup4"></div>
-                <div class="cup cup5"></div>
+        </section>
+        <!-- Camping or Lodging -->
+        <section class="page page2" id="page2">
+            <h1 id="title">Take Off</h1>
+            <div class="container">
+                <h2>What's more important this weekend: having fun in nature, or lounging in comfort?</h2>
+                <div class="choiceContainer">
+                    <button class = 'sleepChoice' id="camping">Go Camping</button>
+                    <button class = 'sleepChoice' id="hotel">Sleep in a Bed</button>
+                </div>
             </div>
-            <div class="playerTwo side side-container"> 
-                <div class="cup cup6"></div>
-                <div class="cup cup7"></div>
-                <div class="cup cup8"></div>
-                <div class="cup cup9"></div>
-                <div class="cup cup10"></div>
-                <div class="cup cup11"></div>    
+           </section>
+        <!-- Suggestions from API - depending on camping/lodging choice as well as a restaurant-->
+        <section class="page page3">
+            <h1 id="title">Take Off</h1>
+            <div class="suggestionContainer">
+                <div class="container suggestions" id="suggestion1">
+                    <h2 class="name" id="name1"></h2>
+                    <p class="address" id="address1"></p>
+                    <a class="website" id="website1" href="#"></a>
+                    <p class="phone" id="phone1"></p>
+                </div>
+                <div class="container suggestions" id="suggestion2">
+                    <h2 class="name" id="name2"></h2>
+                    <p class="address" id="address2"></p>
+                    <a class="website" id="website2" href="#"></a>
+                    <p class="phone" id="phone2"></p>
+                </div>
+                <div class="container suggestions" id="suggestion3">
+                    <h2 class="name" id="name3"></h2>
+                    <p class="address" id="address3"></p>
+                    <a class="website" id="website3" href="#"></a>
+                    <p class="phone" id="phone3"></p>
+                </div>
+                <div class="container suggestions" id="suggestion4">
+                    <h2 class="name" id="name4"></h2>
+                    <p class="address" id="address4"></p>
+                    <a class="website" id="website4" href="#"></a>
+                    <p class="phone" id="phone4"></p>
+                </div>
             </div>
-            <div class="bank player-two-bank">
-                <h2>Player Two</h2>
-            </div>
-        </div>
+        </section>
+
+        <!-- <section class="page page4">
+            <div class="container">
+
+            </div> -->
+        </section>
     </main>
-<!-- jQuery script -->
-<script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4='crossorigin='anonymous'></script>
-<script src='index.js'></script>
+    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=' crossorigin='anonymous'></script>
+    <script src='index.js'></script>
 </body>
 </html>

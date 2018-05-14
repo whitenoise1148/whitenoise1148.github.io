@@ -1,159 +1,258 @@
-// 2 players
-// Create 12 arrays(cups) + 2 arrays(banks)
+const app = {};
+// Location results array is populated inside the location details, here we call it
 
-// Document Ready
-const Document = function () {
+let lodgingID = null;
+let lodgingID2 = null;
+let campingID = null;
+let campingID2 = null;
+let restaurantID = null;
+let restaurantID2 = null;
 
+app.locationResults = [];
+console.log(app.locationResults);
+// console.log(app.locationResults);
+// We can design the restaurant results to work exactly like the location results
+// app.restaurants = [];
+
+app.init = function () {
+    app.events();
 };
-    // arrays 1 - 6 are owned by player 1
-    const bankOne = [];
-    // arrays 7 - 12 are owned by player 2
-    const bankTwo = [];
-    // Each cup starts with 4 stones/seeds(items in array)
-    const stone = 1;
-    // The Play
-    // Creates an array that stores the information
-    const cupArray = [];
-    const bankArray = [];
-    
-    // supsHtmlElements selects div.cup elements in the HTML and places them in an array
-    // this array is taking the information from the html, the div.cup, and putting into the JS environment so it is accessable 
-    const cupsHtmlElements = $('div.cup').toArray();
-    
-    const bankHtmlElements = $('div.bank').toArray();
-    
-    // Main function for playing the game
-    // Holds all play functions and logic inside
-    
-    const distributeStones = (numStones, cupIndex) => {
-        // Take the number of stones in the object numStones
-        // cupIndex will be used to determine where to distribute said stones
-            
-            for (let i = cupIndex + 1; i < cupIndex + 1 + numStones; i++){
-                if (i >= cupArray.length) {
-                    cupArray[i % cupArray.length].stoneCount = cupArray[i % cupArray.length].stoneCount + 1;
-                } else {
-                    cupArray[i].stoneCount = cupArray[i].stoneCount + 1;
-                }
-            };
-            
-            if (cupIndex === -1) {
-                cupArray[11].stoneCount = 0;
-            } else {
-                cupArray[cupIndex].stoneCount = 0;
-            }
-            
-            let removeStones = cupArray[cupIndex].stoneCount;
-            // Remove div.stone's from the clicked object
-            if (removeStones === 0) {
-                $(`.cup${cupIndex}`).empty();
-            }
-            
-            // Loop through the array and remove all the div.stones if the stoneCount of the cup = 0
-            for (let i = 0; i < cupArray.length; i++) {
-                $(`.cup${i}`).empty();
-            }
-            // This loops through the whole array determined by the array length
-            for (let x = 0; x < cupArray.length; x++) {
-                // Loops through the stoneCount 
-                for (let y = 0; y < cupArray[x].stoneCount; y++){
-                    // Adds div.stone to the cups equal to the stoneCount of that cup
-                    $(`.cup${x}`).append('<div class="stone"></div>');  
-                }
-                
-                // If the number of stones in a cup is equal to 2 then that number of stones will be added to the div.bank and stones in the cup will be removed.
-                if (cupArray[x].stoneCount === 2) {
-                    console.log('Capture');
-                    $(`.bank`).append('<div class="stone"></div>');
-                    cupArray[cupIndex].stoneCount = 0;
-                    $(`.cup${x}`).empty();
-                }
-            }    
-        };
-        
-        // Loop through cupArray using the Index from each iteration
-        // Find the cup that corresponds to the index
-        // Use the stoneCount from that current iterations stoneCount and put that number of divs in the cup
-        const gameLogic = function(cup, cupIndex){
-            // console.log(score);
-            if (cup.stoneCount >= 1) {
-                // console.log(cup.cupIndex + 'has' + cup.stoneCount + ' stone(s)');
-                distributeStones (cup.stoneCount, cup.cupIndex);
-            } else {
-                // console.log('This cup is empty');
-            }
-        };
-        
-        // .forEach creates cupArray that contains the information for each cup
-        cupsHtmlElements.forEach((element, i) => {
-            
-            // For each div we are creating an object in cupArray[] to hold the information about that cup
-            cupArray[i] = {
-                htmlElement: cupsHtmlElements[i],
-                stoneCount: 4,
-                cupIndex: i
-            };
-            // Loop through the length of cupArray
-            for (let x = 0; x < cupArray[i].stoneCount; x++) {
-                // For each element in cupArray add 1 div.stone to div.cup on the page
-                $(`.cup${i}`).append("<div class='stone'></div>");
-            };
-            
-            // creating a click event on each cup, so that when a player clicks on any of the cups the stone count will call the gameLogic function with the value of the cups stone count
-            $(cupsHtmlElements[i]).on('click', () => {
-                // this sends the stone count to const gameLogic = function(cupObject) that shows the stone count in that cup
-                gameLogic(cupArray[i], i);
+
+$(function(){
+    app.init();
+    // $('#title').hide();
+});
+
+// Setup landing page with button to initialize the app
+
+    // build form1 - with options presented to the user with where they want to go on their trip
+
+// Choose from 3 options
+
+    // Create budget form with 2 - one cheaper and one a little more pricey
+
+// Give the user an option of camping or staying at a hotel
+
+// Take user inputs and contact the API to request data for accomodation request and restaurants
+
+    // First API Request - places - textsearch
+        // Grab name and place_id and store to variable
+
+        // use name:, permanently_closed and formatted_address to filter out closed businesses and places like McDonalds
+        // Grab top two results and save them to a variable 
+
+    // Second API Request - places - place/details
+        // Take place id to get information we want to display
+        // Grab phone, address, website
+
+// Display the top two results provided by the API to the user
+                // Cannot search by rating or price level within the API
+    // Create a sorting function to loop through array and order by rating
+    // The user then selects their choice
+// Then provide a map to the user for their destination 
+    // if possible display directions
+// Reveal options - 2 sets 
+
+app.events = function () {
+    // First Page -- choose a city
+    $('#wasaga').on('click', function(e){
+        e.preventDefault();
+        const latLon = '44.523674, -80.015939';
+        app.getLodgingID(latLon);
+        app.getCampgroundID(latLon);
+        app.getRestaurantID(latLon);
+        // console.log(latLon);
+        $('main').css("background-image", "url(./images/wasaga.jpg)")
+        $('.page1').fadeOut('slow', function (){
+            $('.page2').fadeIn('slow', function (){
+            });
+
+        });
+    });
+    $('#sauble').on('click', function(e){
+        e.preventDefault();
+        const latLon = '44.637599, -81.265622';
+        app.getLodgingID(latLon);
+        app.getCampgroundID(latLon);
+        app.getRestaurantID(latLon);
+        $('main').css("background-image", "url(./images/sauble.jpg)")
+        $('.page1').fadeOut('slow', function () {
+            $('.page2').fadeIn('slow', function () {
             });
         });
-                
-        window.twttr = (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0],
-            t = window.twttr || {};
-            if (d.getElementById(id)) return t;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "https://platform.twitter.com/widgets.js";
-            fjs.parentNode.insertBefore(js, fjs);
-            
-            t._e = [];
-            t.ready = function (f) {
-                t._e.push(f);
-            };
-            
-            return t;
-            
-        }(document, "script", "twitter-wjs"));
-        
-        (function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+        // console.log(latLon);
+    });
+    $('#tobermory').on('click', function(e){
+        e.preventDefault();
+        const latLon = '45.255908, -81.664490';
+        app.getLodgingID(latLon);
+        app.getCampgroundID(latLon);
+        app.getRestaurantID(latLon);
+        $('main').css("background-image", "url(./images/tobermory.jpg)")
+        $('.page1').fadeOut('slow', function () {
+            $('.page2').fadeIn('slow', function () {
 
+            });
+        });
+        // console.log(latLon);
+    });
+    // Second Page choose camping or hotel
+    $('.sleepChoice').on('click', function(e){
+        e.preventDefault();
+        const choice = this.id;   
+        // console.log(this);        
+        if (choice === 'camping') {
+            // console.log(choice);
+            // app.locationDetails(campingID);
+            app.locationDetails(campingID);
+            app.locationDetails(campingID2);
+            app.locationDetails(restaurantID);
+            app.locationDetails(restaurantID2);
+            console.log(campingID, campingID2, restaurantID, restaurantID2);
+        } else {    
+            app.locationDetails(lodgingID);
+            app.locationDetails(lodgingID2);
+            app.locationDetails(restaurantID);
+            app.locationDetails(restaurantID2);
+            console.log(lodgingID, lodgingID2, restaurantID, restaurantID2);
+        }
+        $('.page2').fadeOut('slow', function () {
+            $('.page3').fadeIn('slow', function () {
 
-        // The player chooses one of their cups(arrays 1-6 or 7-12), takes all of those stones and places 1 in each of the following cups until they run out
-        // Create click event that checks how many stones are in the clicked cup
+            });
+        });
+    });
+};
+
+app.displayResults = function () {
+    // We have created a forEach loop to iterate through the location results array, populated in locationResults and defined globally above
+    app.locationResults.forEach(function (location, index) {
+        // console.log(location);     
+        // Here we defined these variables a second time to keep the code consistent because they are limited in scope to the functions they were defined in
+        const locationName = location.name;
+        const locationAddress = location.formatted_address;
+        const locationWebsite = location.website;
+        const locationPhone = location.international_phone_number;
         
-        // The total # of items is calculated (array.length), that number of the following cups are increased by 1 stone in order (add 1 item to array.push)
-        
-        // Create function to take the total from the click event and then distribute 1 stone to each following cup (ex: choose cup1, has 4 stones. cup2 + 1, cup3 + 1, cup4 + 1, cup5 + 1)
-        // If using an array push 1 item to array
-        // If using object add 1 to stones
-        
-        // Scoring
-        
-        // After choosing which cup(array) you are going to play, if your last stone(item) is placed in an opponent's cup(array) that then has a total of 2 or 3 stones in it you take all of those stones(length) and add them to your bank(array).
-        
-        
-        // The Win
-        // When your bank(array) reaches a total of 25 or more stones(items) you win.
-        // Displays a message YOU WIN!!!!
-        
-        // CREATING WIN CONDITION
-        // const winLogic = function(score){
-            //     if _____ (score >= 25) {
-                //         alert('playerOne Wins!!!');
-                //     }
-                // }
+        if (locationWebsite !== undefined) {
+            $(`#website${index + 1}`).text(`${locationWebsite}`);
+        } 
+        // This creates the text inside the elements in the index.html to display our results for the user
+        $(`#name${index + 1}`).text(`${locationName}`);
+        $(`#address${index + 1}`).text(`${locationAddress}`);
+        $(`#phone${index + 1}`).text(`${locationPhone}`);
+    }) 
+};
+
+// Performing an AJAX request to obtain hotels in Wasaga Beach.
+app.getLodgingID = function (location) {
+    $.ajax({
+        url: 'http://proxy.hackeryou.com',
+        dataType: 'json',
+        method: 'GET',
+        data: {
+            reqUrl: 'https://maps.googleapis.com/maps/api/place/textsearch/json',
+            params: {
+                key: 'AIzaSyAjM2iAW0ZIFyotMj1JJV53Inq595q54kw',
+                location: location,
+                type: 'lodging',
+                rating: 1
+            },
+            proxyHeaders: {
+                'Some-Header': 'goes here'
+            },
+            xmlToJSON: false,
+            useCache: false
+        }
+    }).then(function (res) {
+        // Storing the results from our API requests into apiResults using key/value of type:lodging(apiResults.results[0].name/formatted_address/place_id)
+        const lodgingResults = res;
+        lodgingID = (lodgingResults.results[0].place_id);
+        lodgingID2 = (lodgingResults.results[1].place_id);
+    });
+};
+
+// Performing API Request for campgrounds in Wasaga beach using key/value of type: campground (apiResults.results[0].name/formatted_address/place_id)
+app.getCampgroundID = function (location) {
+    $.ajax({
+        url: 'http://proxy.hackeryou.com',
+        dataType: 'json',
+        method: 'GET',
+        data: {
+            reqUrl: 'https://maps.googleapis.com/maps/api/place/textsearch/json',
+            params: {
+                key: 'AIzaSyAjM2iAW0ZIFyotMj1JJV53Inq595q54kw',
+                location: location,
+                type: 'campground',
+                rating: 4
+            },
+            proxyHeaders: {
+                'Some-Header': 'goes here'
+            },
+            xmlToJSON: false,
+            useCache: false
+        }
+    }).then(function (res) {
+        const campingResults = res;
+        // console.log(campingResults);
+        // console.log(campingID);
+        campingID = (campingResults.results[0].place_id);
+        campingID2 = (campingResults.results[1].place_id);
+    });
+};
+
+app.getRestaurantID = function (location) {
+    $.ajax({
+        url: 'http://proxy.hackeryou.com',
+        dataType: 'json',
+        method: 'GET',
+        data: {
+            reqUrl: 'https://maps.googleapis.com/maps/api/place/textsearch/json',
+            params: {
+                key: 'AIzaSyAjM2iAW0ZIFyotMj1JJV53Inq595q54kw',
+                location: location,
+                type: 'restaurant',
+                rating: 4
+            },
+            proxyHeaders: {
+                'Some-Header': 'goes here'
+            },
+            xmlToJSON: false,
+            useCache: false
+        }
+    }).then(function (res) {
+        const restaurantResults = res;
+        // console.log(apiResults);
+        restaurantID = restaurantResults.results[0].place_id;
+        restaurantID2 = (restaurantResults.results[1].place_id);
+    });
+};
+
+// Performing an API request from the google place details library to obtain the name, phone number, website
+app.locationDetails = function (placeid) {
+    $.ajax({
+        url: 'http://proxy.hackeryou.com',
+        dataType: 'json',
+        method: 'GET',
+        data: {
+            reqUrl: 'https://maps.googleapis.com/maps/api/place/details/json',
+            params: {
+                key: 'AIzaSyAjM2iAW0ZIFyotMj1JJV53Inq595q54kw',
+                placeid: placeid
+            },
+            proxyHeaders: {
+                'Some-Header': 'goes here'
+            },
+            xmlToJSON: false,
+            useCache: false
+        }
+    }).then(function (res) {
+        // const apiResults = res;
+        // console.log(res);
+        app.locationResults.push(res.result);
+
+        app.displayResults();
+        console.log(displayResults);
+
+    });
+}
